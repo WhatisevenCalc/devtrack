@@ -26,8 +26,14 @@ git add .
 if %errorlevel% neq 0 ( echo [ERROR] Failed to add files. & pause & exit /b )
 
 echo [3/4] Committing files...
-git commit -m "Initial commit — DevTrack v1.0"
-if %errorlevel% neq 0 ( echo [ERROR] Commit failed. Check your Git configuration. & pause & exit /b )
+git diff --cached --quiet
+if %errorlevel% equ 0 (
+    echo         No changes to commit.
+) else (
+    git commit -m "Initial commit — DevTrack v1.0"
+    if %errorlevel% neq 0 ( echo [ERROR] Commit failed. Check your Git configuration. & pause & exit /b )
+    echo         Commit successful.
+)
 
 echo [4/4] Pushing to GitHub...
 git remote remove origin >nul 2>&1
