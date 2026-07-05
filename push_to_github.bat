@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 title Push DevTrack to GitHub
 cd /d "%~dp0"
 
@@ -39,23 +40,46 @@ echo [4/4] Pushing to GitHub...
 git remote remove origin >nul 2>&1
 git remote add origin https://github.com/WhatisevenCalc/devtrack.git
 git branch -M main
-git push -u origin main
+
+echo         Pushing to remote...
+call :PushWithFallback main
 
 if %errorlevel% neq 0 (
     echo.
-    echo [ACTION REQUIRED] Push failed. You may need to authenticate.
+    echo [ERROR] Could not push to GitHub.
     echo.
-    echo   Option 1 — Personal Access Token:
-    echo     git remote set-url origin https://YOUR_TOKEN@github.com/WhatisevenCalc/devtrack.git
-    echo     git push -u origin main
-    echo.
-    echo   Option 2 — GitHub CLI:
-    echo     gh auth login
-    echo     git push -u origin main
+    echo   Manual steps:
+    echo     1. git pull --rebase origin main
+    echo     2. git push -u origin main
     echo.
     pause
     exit /b
 )
+
+goto :Success
+
+:PushWithFallback
+git push -u origin %1
+if %errorlevel% equ 0 exit /b 0
+
+:: Check if rejection was due to remote having existing commits
+echo         Checking rejection reason...
+git ls-remote origin HEAD >nul 2>&1
+if %errorlevel% equ 0 (
+    echo         Remote has existing commits. Pulling and rebasing...
+    git pull --rebase origin %1
+    if %errorlevel% equ 0 (
+        git push -u origin %1
+        if !errorlevel! equ 0 exit /b 0
+    )
+)
+
+:: Force push as last resort
+echo         Forcing push...
+git push --force -u origin %1
+exit /b %errorlevel%
+
+:Success
 
 echo.
 echo =============================================
