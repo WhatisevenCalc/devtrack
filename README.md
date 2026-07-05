@@ -4,6 +4,9 @@ Copyright (c) 2026 Ivan Timov. All rights reserved.
 
 Download Link: https://mega.nz/folder/0RsAxYoJ#E9_6_UrxdwNyBifYsXKP0A
 
+<img width="417" height="458" alt="Screenshot 2026-07-05 191252" src="https://github.com/user-attachments/assets/57f3d3ea-3e54-4a86-a739-c6cdf009b222" />
+
+
 WHAT IT DOES
   DevTrack tracks how long you use a specific application.
   - Select an app (e.g. code.exe, chrome.exe) from the dropdown menu
