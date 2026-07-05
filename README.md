@@ -2,6 +2,8 @@ DevTrack - Development Activity Tracker
 Copyright (c) 2026 Ivan Timov. All rights reserved.
 ====================================================
 
+Download Link: https://mega.nz/folder/0RsAxYoJ#E9_6_UrxdwNyBifYsXKP0A
+
 WHAT IT DOES
   DevTrack tracks how long you use a specific application.
   - Select an app (e.g. code.exe, chrome.exe) from the dropdown menu
